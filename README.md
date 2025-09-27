@@ -1,2 +1,316 @@
 # tutuzinfera.github.io
 Teste de Site de um Restaurante
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cardápio Digital</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #251004;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #ffc574, #cc5500);
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    header img {
+      max-width: 320px;
+      width: 100%;
+      height: auto;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 2rem 1rem;
+    }
+
+    /* Abas */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .tab {
+      padding: 0.8rem 1.5rem;
+      background: #fff;
+      margin: 0 5px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #cc5500;
+      transition: 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .tab.active {
+      background: #cc5500;
+      color: #fff;
+      border-color: #fff;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .item {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .item:hover {
+      transform: scale(1.03);
+    }
+
+    .item img {
+      width: 100%;
+      height: 180px; /* altura padronizada */
+      object-fit: cover;
+      display: block;
+    }
+
+    .item-content {
+      padding: 1rem;
+    }
+
+    .item h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.3rem;
+      color: #c69664;
+      font-weight: bold;
+    }
+
+    .item p {
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .item strong {
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    .whatsapp-btn {
+      display: block;
+      text-align: center;
+      background:#1ebe5d;
+      color: white;
+      padding: 1rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 2rem auto 0;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: background 0.3s ease;
+    }
+
+    .whatsapp-btn:hover {
+      background: #1ebe5d;
+    }
+
+    /* Esconde conteúdo das abas */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="imagens/logo_comida_classica.png" alt="Logo Comida Clássica">
+    <p>Experimente nossos sabores irresistíveis</p>
+  </header>
+
+  <div class="container">
+    <!-- Abas -->
+    <div class="tabs">
+      <div class="tab active" onclick="openTab('fixo')">Cardápio Fixo</div>
+      <div class="tab" onclick="openTab('especiais')">Pratos Do Dia</div>
+    </div>
+
+    <!-- Cardápio Fixo -->
+    <div id="fixo" class="tab-content active">
+      <div class="grid">
+        <!-- Seus pratos fixos aqui -->
+        <div class="item">
+          <img src="imagens/strogonoff.png" alt="Strogonoff de frango">
+          <div class="item-content">
+            <h3>Strogonoff de frango</h3>
+            <p>Arroz, frango, batata palha</p>
+            <strong>R$ 30,00</strong>
+          </div>
+        </div>
+        <div class="item">
+          <img src="imagens/picadinho.png" alt="Picadinho de carne">
+          <div class="item-content">
+            <h3>Picadinho de carne</h3>
+            <p>Arroz, feijão tropeiro, salada, batata palha</p>
+            <strong>R$ 30,00</strong>
+          </div>
+        </div>
+        <div class="item">
+          <img src="imagens/tilapia.png" alt="Filé de tilápia empanado">
+          <div class="item-content">
+            <h3>Filé de tilápia empanado</h3>
+            <p>Arroz, feijão em caldo, salada de legumes, batata frita</p>
+            <strong>R$ 30,00</strong>
+          </div>
+        </div>
+        <div class="item">
+          <img src="imagens/fricasse.png" alt="Fricassê de frango">
+          <div class="item-content">
+            <h3>Fricassê de frango</h3>
+            <p>Arroz, batata palha, salada</p>
+            <strong>R$ 30,00</strong>
+          </div>
+        </div>
+        <div class="item">
+          <img src="imagens/risotocamarao.png" alt="Risoto de camarão">
+          <div class="item-content">
+            <h3>Risoto de camarão</h3>
+            <p>Batata palha, salada</p>
+            <strong>R$ 30,00</strong>
+          </div>
+        </div>
+        <div class="item">
+          <img src="imagens/bifeacebolado.png" alt="Bife acebolado">
+          <div class="item-content">
+            <h3>Bife acebolado</h3>
+            <p>Arroz, batata frita, feijão em caldo, salada</p>
+            <strong>R$ 30,00</strong>
+          </div>
+        </div>
+        <div class="item">
+          <img src="imagens/bifemilanesaparmegiana.png" alt="Bife a parmegiana/Bife a milanesa">
+          <div class="item-content">
+            <h3>Bife a parmegiana/Bife a milanesa</h3>
+            <p>Arroz, batata frita, feijão em caldo, salada</p>
+            <strong>R$ 30,00</strong>
+          </div>
+        </div>
+        <div class="item">
+          <img src="imagens/filemignon.png" alt="Filé Mignon ao molho quatro queijos">
+          <div class="item-content">
+            <h3>Filé Mignon ao molho quatro queijos</h3>
+            <p>Arroz, feijão em caldo, batata frita<br>salada de frutas e salpicão grátis</p>
+            <strong>R$ 30,00</strong>
+          </div>
+        </div>
+        <div class="item">
+          <img src="imagens/frangoparmegianamilanesa.png" alt="Frango a Parmegiana/Frango a milanesa">
+          <div class="item-content">
+            <h3>Frango a Parmegiana/Frango a milanesa</h3>
+            <p>Arroz, batata frita, feijão em caldo, salada</p>
+            <strong>R$ 30,00</strong>
+          </div>
+        </div>
+
+        <!-- ... restantes do cardápio fixo ... -->
+
+      </div>
+    </div>
+
+    <!-- Cardápio Especiais -->
+    <div id="especiais" class="tab-content">
+  <div class="grid" id="lista-especiais"></div>
+</div>
+
+<script>
+  const urlPlanilha = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ234qbs5IeUC3pAtYIyd2QtwmuKbyN8YxfjUPBM_uWl8fNlnSlR4MT3pis95kjW-KRd7pIey63-gZC/pub?output=csv";
+
+  async function carregarEspeciais() {
+    try {
+      const resposta = await fetch(urlPlanilha);
+      if (!resposta.ok) throw new Error("Erro HTTP: " + resposta.status);
+
+      const texto = await resposta.text();
+      console.log("CSV carregado:", texto); // 🔎 debug
+
+      const linhas = texto.trim().split(/\r?\n/).slice(1);
+
+      const hoje = new Date().getDay(); // 0=Dom, 1=Seg, ..., 6=Sáb
+      const dias = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"];
+      const diaHoje = dias[hoje];
+
+      const container = document.getElementById("lista-especiais");
+      let encontrou = false;
+
+      linhas.forEach(linha => {
+        const partes = linha.split(",");
+        const [dia, nome, desc, preco, img] = partes.map(c => c.trim());
+
+        if (dia.toLowerCase() === diaHoje) {
+          encontrou = true;
+
+          const imagemHTML = img ? `<img src="${img}" alt="${nome}">` : "";
+          const descHTML = desc ? `<p>${desc}</p>` : "";
+          const precoHTML = preco ? `<strong>${preco}</strong>` : "";
+
+          container.innerHTML += `
+            <div class="item">
+              ${imagemHTML}
+              <div class="item-content">
+                <h3>${nome}</h3>
+                ${descHTML}
+                ${precoHTML}
+              </div>
+            </div>
+          `;
+        }
+      });
+
+      if (!encontrou) {
+        container.innerHTML = "<p style='color:white; text-align:center;'>Hoje não temos pratos especiais 🍽️</p>";
+      }
+    } catch (erro) {
+      console.error("Erro ao carregar especiais:", erro);
+      document.getElementById("lista-especiais").innerHTML = "<p style='color:white; text-align:center;'>Erro ao carregar os pratos especiais ⚠️</p>";
+    }
+  }
+
+  carregarEspeciais();
+</script>
+
+
+
+
+    <!-- Botão WhatsApp -->
+    <a class="whatsapp-btn" href="https://wa.me/5599999999999" target="_blank">
+      Fazer Pedido pelo WhatsApp
+    </a>
+  </div>
+
+  <script>
+    function openTab(tabId) {
+      document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(content => content.classList.remove("active"));
+
+      document.querySelector(`.tab[onclick="openTab('${tabId}')"]`).classList.add("active");
+      document.getElementById(tabId).classList.add("active");
+    }
+  </script>
+</body>
+</html>
