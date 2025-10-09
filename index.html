@@ -158,7 +158,7 @@
           <div class="item-content">
             <h3>Strogonoff de frango</h3>
             <p>Arroz, frango, batata palha</p>
-            <strong>R$ 30,00</strong>
+            <strong>R$ 20,00</strong>
           </div>
         </div>
         <div class="item">
@@ -166,7 +166,7 @@
           <div class="item-content">
             <h3>Picadinho de carne</h3>
             <p>Arroz, feijão tropeiro, salada, batata palha</p>
-            <strong>R$ 30,00</strong>
+            <strong>R$ 22,00</strong>
           </div>
         </div>
         <div class="item">
@@ -182,7 +182,7 @@
           <div class="item-content">
             <h3>Fricassê de frango</h3>
             <p>Arroz, batata palha, salada</p>
-            <strong>R$ 30,00</strong>
+            <strong>R$ 25,00</strong>
           </div>
         </div>
         <div class="item">
@@ -190,7 +190,7 @@
           <div class="item-content">
             <h3>Risoto de camarão</h3>
             <p>Batata palha, salada</p>
-            <strong>R$ 30,00</strong>
+            <strong>R$ 25,00</strong>
           </div>
         </div>
         <div class="item">
@@ -198,7 +198,7 @@
           <div class="item-content">
             <h3>Bife acebolado</h3>
             <p>Arroz, batata frita, feijão em caldo, salada</p>
-            <strong>R$ 30,00</strong>
+            <strong>R$ 25,00</strong>
           </div>
         </div>
         <div class="item">
@@ -214,7 +214,7 @@
           <div class="item-content">
             <h3>Filé Mignon ao molho quatro queijos</h3>
             <p>Arroz, feijão em caldo, batata frita<br>salada de frutas e salpicão grátis</p>
-            <strong>R$ 30,00</strong>
+            <strong>R$ 40,00</strong>
           </div>
         </div>
         <div class="item">
@@ -230,70 +230,6 @@
 
       </div>
     </div>
-
-    <!-- Cardápio Especiais -->
-    <div id="especiais" class="tab-content">
-  <div class="grid" id="lista-especiais"></div>
-</div>
-
-<script>
-  const urlPlanilha = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ234qbs5IeUC3pAtYIyd2QtwmuKbyN8YxfjUPBM_uWl8fNlnSlR4MT3pis95kjW-KRd7pIey63-gZC/pub?output=csv";
-
-  async function carregarEspeciais() {
-    try {
-      const resposta = await fetch(urlPlanilha);
-      if (!resposta.ok) throw new Error("Erro HTTP: " + resposta.status);
-
-      const texto = await resposta.text();
-      console.log("CSV carregado:", texto); // 🔎 debug
-
-      const linhas = texto.trim().split(/\r?\n/).slice(1);
-
-      const hoje = new Date().getDay(); // 0=Dom, 1=Seg, ..., 6=Sáb
-      const dias = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"];
-      const diaHoje = dias[hoje];
-
-      const container = document.getElementById("lista-especiais");
-      let encontrou = false;
-
-      linhas.forEach(linha => {
-        const partes = linha.split(",");
-        const [dia, nome, desc, preco, img] = partes.map(c => c.trim());
-
-        if (dia.toLowerCase() === diaHoje) {
-          encontrou = true;
-
-          const imagemHTML = img ? `<img src="${img}" alt="${nome}">` : "";
-          const descHTML = desc ? `<p>${desc}</p>` : "";
-          const precoHTML = preco ? `<strong>${preco}</strong>` : "";
-
-          container.innerHTML += `
-            <div class="item">
-              ${imagemHTML}
-              <div class="item-content">
-                <h3>${nome}</h3>
-                ${descHTML}
-                ${precoHTML}
-              </div>
-            </div>
-          `;
-        }
-      });
-
-      if (!encontrou) {
-        container.innerHTML = "<p style='color:white; text-align:center;'>Hoje não temos pratos especiais 🍽️</p>";
-      }
-    } catch (erro) {
-      console.error("Erro ao carregar especiais:", erro);
-      document.getElementById("lista-especiais").innerHTML = "<p style='color:white; text-align:center;'>Erro ao carregar os pratos especiais ⚠️</p>";
-    }
-  }
-
-  carregarEspeciais();
-</script>
-
-
-
 
     <!-- Botão WhatsApp -->
     <a class="whatsapp-btn" href="https://wa.me/5599999999999" target="_blank">
