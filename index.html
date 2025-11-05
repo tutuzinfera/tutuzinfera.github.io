@@ -146,7 +146,7 @@
     <!-- Abas -->
     <div class="tabs">
       <div class="tab active" onclick="openTab('fixo')">Cardápio Fixo</div>
-      <div class="tab" onclick="openTab('especiais')">Novidades</div>
+      <div class="tab" onclick="openTab('especiais')">Pratos do Dia</div>
     </div>
 
     <!-- Cardápio Fixo -->
@@ -228,15 +228,8 @@
       </div>
     </div>
 
-        <!-- Novidades -->
-      <div id="especiais" class="tab-content">
-        <h2 style="color: #fff; text-align: center; margin-bottom: 1rem;">Stories do Instagram</h2>
-          <div class="tagembed-widget" style="width:100%; height:500px; overflow:auto; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.2);" data-widget-id="306668" data-website="1"></div>
-            <script src="https://widget.tagembed.com/embed.min.js" type="text/javascript"></script>
-      </div>
-
     <!-- Botão WhatsApp -->
-    <a class="whatsapp-btn" href="https://wa.me/5561999155030" target="_blank">
+    <a class="whatsapp-btn" href="https://wa.me/5599999999999" target="_blank">
       Fazer Pedido pelo WhatsApp
     </a>
   </div>
@@ -248,6 +241,39 @@
 
       document.querySelector(`.tab[onclick="openTab('${tabId}')"]`).classList.add("active");
       document.getElementById(tabId).classList.add("active");
+
+      if (tabId === "especiais") {
+        carregarPratosDoDia();
+      }
+    }
+
+    async function carregarPratosDoDia() {
+      const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ234qbs5IeUC3pAtYIyd2QtwmuKbyN8YxfjUPBM_uWl8fNlnSlR4MT3pis95kjW-KRd7pIey63-gZC/pub?output=csv"; // substitua aqui
+      const response = await fetch(url);
+      const data = await response.text();
+
+      const hoje = new Date().toLocaleDateString("pt-BR", { weekday: "long" }).toLowerCase();
+      const linhas = data.split("\n").slice(1);
+      const container = document.getElementById("pratos-dinamicos");
+      container.innerHTML = "";
+
+      linhas.forEach(linha => {
+        const [nome, descricao, preco, imagem, dias] = linha.split(",");
+
+        if (dias && dias.toLowerCase().includes(hoje)) {
+          const item = document.createElement("div");
+          item.className = "item";
+          item.innerHTML = `
+            <img src="${imagem.trim()}" alt="${nome.trim()}">
+            <div class="item-content">
+              <h3>${nome.trim()}</h3>
+              <p>${descricao.trim()}</p>
+              <strong>${preco.trim()}</strong>
+            </div>
+          `;
+          container.appendChild(item);
+        }
+      });
     }
   </script>
 </body>
