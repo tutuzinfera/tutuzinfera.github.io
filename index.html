@@ -248,6 +248,7 @@
     console.log("Dados carregados:", data); // Verifica se o PapaParse conseguiu ler
 
     const hoje = normalizarDia(new Date().toLocaleDateString("pt-BR", { weekday: "long" }));
+
     const container = document.getElementById("lista-especiais");
     container.innerHTML = "";
 
@@ -282,12 +283,14 @@
 
 
   function normalizarDia(dia) {
-    return dia
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .trim();
-  }
+  return dia
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // remove acentos
+    .replace(/-feira/, "") // remove sufixo "-feira"
+    .trim();
+}
+
 </script>
 
 
