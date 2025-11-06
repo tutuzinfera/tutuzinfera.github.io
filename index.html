@@ -145,8 +145,8 @@
   <div class="container">
     <!-- Abas -->
     <div class="tabs">
-      <div class="tab active" onclick="openTab('fixo')">Cardápio Fixo</div>
-      <div class="tab" onclick="openTab('especiais'); carregarPratosDoDia();">Pratos Do Dia</div>
+      <div class="tab" onclick="openTab.call(this, 'fixo')">Cardápio Fixo</div>
+      <div class="tab" onclick="openTab.call(this, 'especiais'); carregarPratosDoDia()">Pratos Do Dia </div>
     </div>
 
     <!-- Cardápio Fixo -->
@@ -291,13 +291,20 @@
   </div>
 
   <script>
-    function openTab(tabId) {
-      document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
-      document.querySelectorAll(".tab-content").forEach(content => content.classList.remove("active"));
+  function openTab(tabId) {
+    // Remove classe 'active' de todas as abas
+    document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
 
-      document.querySelector(`.tab[onclick="openTab('${tabId}')"]`).classList.add("active");
-      document.getElementById(tabId).classList.add("active");
-    }
-  </script>
+    // Remove classe 'active' de todos os conteúdos
+    document.querySelectorAll(".tab-content").forEach(content => content.classList.remove("active"));
+
+    // Ativa o conteúdo da aba clicada
+    document.getElementById(tabId)?.classList.add("active");
+
+    // Ativa a aba clicada usando evento
+    event.currentTarget.classList.add("active");
+  }
+</script>
+
 </body>
 </html>
