@@ -244,7 +244,7 @@
     const hoje = new Date().toLocaleDateString("pt-BR", { weekday: "long" }).toLowerCase();
     const data = Papa.parse(csv, { header: true, skipEmptyLines: true }).data;
 
-    const container = document.getElementById("pratos-dinamicos");
+    const container = document.getElementById("lista-especiais");
     container.innerHTML = "";
 
     data.forEach(linha => {
