@@ -146,19 +146,19 @@
     <!-- Abas -->
     <div class="tabs">
       <div class="tab active" onclick="openTab('fixo')">Cardápio Fixo</div>
-      <div class="tab" onclick="openTab('especiais')">Pratos do Dia</div>
+      <div class="tab" onclick="openTab('especiais')">Pratos Do Dia</div>
     </div>
 
     <!-- Cardápio Fixo -->
     <div id="fixo" class="tab-content active">
       <div class="grid">
-        <!-- Pratos fixos-->
+        <!-- Seus pratos fixos aqui -->
         <div class="item">
           <img src="imagens/strogonoff.png" alt="Strogonoff de frango">
           <div class="item-content">
             <h3>Strogonoff de frango</h3>
             <p>Arroz, frango, batata palha</p>
-            <strong>R$ 20,00</strong>
+            <strong>R$ 30,00</strong>
           </div>
         </div>
         <div class="item">
@@ -166,7 +166,7 @@
           <div class="item-content">
             <h3>Picadinho de carne</h3>
             <p>Arroz, feijão tropeiro, salada, batata palha</p>
-            <strong>R$ 22,00</strong>
+            <strong>R$ 30,00</strong>
           </div>
         </div>
         <div class="item">
@@ -182,7 +182,7 @@
           <div class="item-content">
             <h3>Fricassê de frango</h3>
             <p>Arroz, batata palha, salada</p>
-            <strong>R$ 25,00</strong>
+            <strong>R$ 30,00</strong>
           </div>
         </div>
         <div class="item">
@@ -190,7 +190,7 @@
           <div class="item-content">
             <h3>Risoto de camarão</h3>
             <p>Batata palha, salada</p>
-            <strong>R$ 25,00</strong>
+            <strong>R$ 30,00</strong>
           </div>
         </div>
         <div class="item">
@@ -198,7 +198,7 @@
           <div class="item-content">
             <h3>Bife acebolado</h3>
             <p>Arroz, batata frita, feijão em caldo, salada</p>
-            <strong>R$ 25,00</strong>
+            <strong>R$ 30,00</strong>
           </div>
         </div>
         <div class="item">
@@ -214,7 +214,7 @@
           <div class="item-content">
             <h3>Filé Mignon ao molho quatro queijos</h3>
             <p>Arroz, feijão em caldo, batata frita<br>salada de frutas e salpicão grátis</p>
-            <strong>R$ 40,00</strong>
+            <strong>R$ 30,00</strong>
           </div>
         </div>
         <div class="item">
@@ -227,6 +227,52 @@
         </div>
       </div>
     </div>
+
+    <!-- Cardápio Especiais -->
+    <div id="especiais" class="tab-content">
+  <div class="grid" id="lista-especiais"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script>
+  async function carregarPratosDoDia() {
+    const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ234qbs5IeUC3pAtYIyd2QtwmuKbyN8YxfjUPBM_uWl8fNlnSlR4MT3pis95kjW-KRd7pIey63-gZC/pub?output=csv";
+    const response = await fetch(url);
+    const csv = await response.text();
+
+    const hoje = new Date().toLocaleDateString("pt-BR", { weekday: "long" }).toLowerCase();
+    const data = Papa.parse(csv, { header: true }).data;
+
+    const container = document.getElementById("pratos-dinamicos");
+    container.innerHTML = "";
+
+    data.forEach(linha => {
+      const nome = linha["Nome"];
+      const descricao = linha["Descrição"];
+      const preco = linha["Preço"];
+      const imagem = linha["ImagemURL"];
+      const dias = linha["Dia(s)"];
+
+      if (dias && dias.toLowerCase().includes(hoje) && imagem) {
+        const item = document.createElement("div");
+        item.className = "item";
+        item.innerHTML = `
+          <img src="${imagem.trim()}" alt="${nome.trim()}">
+          <div class="item-content">
+            <h3>${nome.trim()}</h3>
+            <p>${descricao.trim()}</p>
+            <strong>${preco.trim()}</strong>
+          </div>
+        `;
+        container.appendChild(item);
+      }
+    });
+  }
+  carregarPratosDoDia();
+</script>
+
+
+
 
     <!-- Botão WhatsApp -->
     <a class="whatsapp-btn" href="https://wa.me/5599999999999" target="_blank">
@@ -241,39 +287,6 @@
 
       document.querySelector(`.tab[onclick="openTab('${tabId}')"]`).classList.add("active");
       document.getElementById(tabId).classList.add("active");
-
-      if (tabId === "especiais") {
-        carregarPratosDoDia();
-      }
-    }
-
-    async function carregarPratosDoDia() {
-      const url = "https://docs.google.com/spreadsheets/d/1xgkWZKXzZkZxKZgkZkZxKZgkZkZxKZgkZkZxKZgkZkZxKZgk/pub?output=csv"; 
-      const response = await fetch(url);
-      const data = await response.text();
-
-      const hoje = new Date().toLocaleDateString("pt-BR", { weekday: "long" }).toLowerCase();
-      const linhas = data.split("\n").slice(1);
-      const container = document.getElementById("pratos-dinamicos");
-      container.innerHTML = "";
-
-      linhas.forEach(linha => {
-        const [nome, descricao, preco, imagem, dias] = linha.split(",");
-
-        if (dias && dias.toLowerCase().includes(hoje)) {
-          const item = document.createElement("div");
-          item.className = "item";
-          item.innerHTML = `
-            <img src="${imagem.trim()}" alt="${nome.trim()}">
-            <div class="item-content">
-              <h3>${nome.trim()}</h3>
-              <p>${descricao.trim()}</p>
-              <strong>${preco.trim()}</strong>
-            </div>
-          `;
-          container.appendChild(item);
-        }
-      });
     }
   </script>
 </body>
