@@ -146,8 +146,8 @@
     <!-- Abas -->
     <div class="tabs">
       <div class="tab active" onclick="openTab('fixo')">Cardápio Fixo</div>
-      <div class="tab" onclick="openTab('especiais')">Pratos Do Dia</div>
-    </div>
+      <div class="tab" onclick="openTab('especiais'); carregarPratosDoDia();">Novidades</div>
+
 
     <!-- Cardápio Fixo -->
     <div id="fixo" class="tab-content active">
@@ -234,6 +234,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
 <script>
   async function carregarPratosDoDia() {
     const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ234qbs5IeUC3pAtYIyd2QtwmuKbyN8YxfjUPBM_uWl8fNlnSlR4MT3pis95kjW-KRd7pIey63-gZC/pub?output=csv";
@@ -241,7 +242,7 @@
     const csv = await response.text();
 
     const hoje = new Date().toLocaleDateString("pt-BR", { weekday: "long" }).toLowerCase();
-    const data = Papa.parse(csv, { header: true }).data;
+    const data = Papa.parse(csv, { header: true, skipEmptyLines: true }).data;
 
     const container = document.getElementById("pratos-dinamicos");
     container.innerHTML = "";
@@ -268,9 +269,7 @@
       }
     });
   }
-  carregarPratosDoDia();
 </script>
-
 
 
 
