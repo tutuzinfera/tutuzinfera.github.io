@@ -243,6 +243,8 @@
     const hoje = normalizarDia(new Date().toLocaleDateString("pt-BR", { weekday: "long" }));
     const data = Papa.parse(csv, { header: true, skipEmptyLines: true }).data;
 
+    console.log("Dados carregados:", data);
+
     const container = document.getElementById("lista-especiais");
     container.innerHTML = "";
 
