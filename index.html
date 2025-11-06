@@ -234,42 +234,53 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-
 <script>
   async function carregarPratosDoDia() {
     const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ234qbs5IeUC3pAtYIyd2QtwmuKbyN8YxfjUPBM_uWl8fNlnSlR4MT3pis95kjW-KRd7pIey63-gZC/pub?output=csv";
     const response = await fetch(url);
     const csv = await response.text();
 
-    const hoje = new Date().toLocaleDateString("pt-BR", { weekday: "long" }).toLowerCase();
+    const hoje = normalizarDia(new Date().toLocaleDateString("pt-BR", { weekday: "long" }));
     const data = Papa.parse(csv, { header: true, skipEmptyLines: true }).data;
 
     const container = document.getElementById("lista-especiais");
     container.innerHTML = "";
 
     data.forEach(linha => {
-      const nome = linha["Nome"];
-      const descricao = linha["Descrição"];
-      const preco = linha["Preço"];
-      const imagem = linha["ImagemURL"];
-      const dias = linha["Dia(s)"];
+      const nome = linha["Nome"]?.trim();
+      const descricao = linha["Descrição"]?.trim();
+      const preco = linha["Preço"]?.trim();
+      const imagem = linha["ImagemURL"]?.trim();
+      const dias = linha["Dia(s)"]?.trim();
 
-      if (dias && dias.toLowerCase().includes(hoje) && imagem) {
-        const item = document.createElement("div");
-        item.className = "item";
-        item.innerHTML = `
-          <img src="${imagem.trim()}" alt="${nome.trim()}">
-          <div class="item-content">
-            <h3>${nome.trim()}</h3>
-            <p>${descricao.trim()}</p>
-            <strong>${preco.trim()}</strong>
-          </div>
-        `;
-        container.appendChild(item);
-      }
+      if (!nome || !dias || !imagem) return;
+
+      const diasArray = dias.split(",").map(d => normalizarDia(d));
+      if (!diasArray.includes(hoje)) return;
+
+      const item = document.createElement("div");
+      item.className = "item";
+      item.innerHTML = `
+        <img src="${imagem}" alt="${nome}" onerror="this.src='https://via.placeholder.com/300x180.png?text=Imagem+Indisponível'">
+        <div class="item-content">
+          <h3>${nome}</h3>
+          <p>${descricao || "Sem descrição"}</p>
+          <strong>${preco || "Preço não informado"}</strong>
+        </div>
+      `;
+      container.appendChild(item);
     });
   }
+
+  function normalizarDia(dia) {
+    return dia
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .trim();
+  }
 </script>
+
 
 
 
