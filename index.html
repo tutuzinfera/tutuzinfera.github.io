@@ -130,6 +130,11 @@
     .whatsapp-btn:hover {
       background: #1ebe5d;
     }
+    
+    #especiais {
+      display: block !important;
+    }
+
 
     /* Esconde conteúdo das abas */
     .tab-content { display: none; }
@@ -315,6 +320,9 @@
 
     // Ativa a aba clicada usando evento
     event.currentTarget.classList.add("active");
+
+    console.log("Aba ativada:", tabId);
+
   }
 </script>
 
