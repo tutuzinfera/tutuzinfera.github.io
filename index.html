@@ -236,15 +236,18 @@
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <script>
   async function carregarPratosDoDia() {
-    const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ234qbs5IeUC3pAtYIyd2QtwmuKbyN8YxfjUPBM_uWl8fNlnSlR4MT3pis95kjW-KRd7pIey63-gZC/pub?output=csv";
+  const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ234qbs5IeUC3pAtYIyd2QtwmuKbyN8YxfjUPBM_uWl8fNlnSlR4MT3pis95kjW-KRd7pIey63-gZC/pub?output=csv";
+
+  try {
     const response = await fetch(url);
     const csv = await response.text();
 
-    const hoje = normalizarDia(new Date().toLocaleDateString("pt-BR", { weekday: "long" }));
+    console.log("CSV bruto:", csv); // Verifica se o conteúdo veio da planilha
+
     const data = Papa.parse(csv, { header: true, skipEmptyLines: true }).data;
+    console.log("Dados carregados:", data); // Verifica se o PapaParse conseguiu ler
 
-    console.log("Dados carregados:", data);
-
+    const hoje = normalizarDia(new Date().toLocaleDateString("pt-BR", { weekday: "long" }));
     const container = document.getElementById("lista-especiais");
     container.innerHTML = "";
 
@@ -272,7 +275,11 @@
       `;
       container.appendChild(item);
     });
+  } catch (error) {
+    console.error("Erro ao carregar CSV:", error);
   }
+}
+
 
   function normalizarDia(dia) {
     return dia
